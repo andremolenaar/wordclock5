@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+ <script type = "text/javascript" language = "javascript">
+		 
+		$(function() {
+          $( "#red_points" ).slider({
+            range: "min",
+            value: 127,
+            min: 1,
+            max: 255,
+            stop: function( event, ui ) {
+              $( "#red_points" ).val( red_points.value );
+	          $.getJSON('/red?value=' + red_points.value );
+            }
+          });
+          $( "#red_points" ).val( $( "#slider-range-min" ).slider( "red_points.value" ) );		  
+        });
+
+		$(function() {
+          $( "#green_points" ).slider({
+            range: "min",
+            value: 127,
+            min: 1,
+            max: 255,
+            stop: function( event, ui ) {
+              $( "#green_points" ).val( green_points.value );
+	          $.getJSON('/green?value=' + green_points.value );
+            }
+          });
+          $( "#green_points" ).val( $( "#slider-range-min" ).slider( "green_points.value" ) );		  
+        });
+
+		$(function() {
+          $( "#blue_points" ).slider({
+            range: "min",
+            value: 127,
+            min: 1,
+            max: 255,
+            stop: function( event, ui ) {
+              $( "#blue_points" ).val( blue_points.value );
+	          $.getJSON('/blue?value=' + blue_points.value );
+            }
+          });
+          $( "#blue_points" ).val( $( "#slider-range-min" ).slider( "blue_points.value" ) );		  
+        });
+		
+</script>
+</head>
+<body>
+
+<div data-role="page">
+  <div data-role="header">
+    <h1>Color Setup</h1>
+  </div>
+  <div data-role="main" class="ui-content">
+      <label for="points">Red:</label>
+      <input type="range" name="red_points" id="red_points" value="128" min="0" max="255">
+      <label for="points">Green:</label>
+      <input type="range" name="green_points" id="green_points" value="128" min="0" max="255">
+      <label for="points">Blue:</label>
+      <input type="range" name="blue_points" id="blue_points" value="128" min="0" max="255">
+    </p>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<link rel="apple-touch-icon" href="/logo.png">
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+ <script type = "text/javascript" language = "javascript">
+        $(document).ready(function() {
+          $("#btnTime").click(function(event){
+            $.getJSON('/time', function(jd) {
+              $('#time').html('<p> Time: ' + jd.time + '</p>');
+              $('#time').append('<p>Timezone : ' + jd.timezone+ '</p>');
+              $('#time').append('<p>Software Version : ' + jd.softwareversion+ '</p>');
+            });
+          });
+         $("#btnAnimate1").click(function(event){
+            $.getJSON('/animate1', function(jd) {
+             
+            });
+          });
+      $("#btnAnimate2").click(function(event){
+            $.getJSON('/animate2', function(jd) {
+             
+            });
+          });
+    });		
+
+ 
+    
+		
+		$(function() {
+          $( "#br_points" ).slider({
+            range: "min",
+            value: 128,
+            min: 0,
+            max: 255,
+            stop: function( event, ui ) {
+              $( "#br_points" ).val( br_points.value );
+	          $.getJSON('/brightness?value=' + br_points.value );
+            }
+          });
+          $( "#br_points" ).val( $( "#slider-range-min" ).slider( "br_points.value" ) ); 
+        });
+
+		$(function() {
+		  var val = 'on';
+		  if(val!==$(this).val()){
+            $('#switch2').change(function() {
+              $.getJSON('/multicolor?value=' + $(this).val() );
+            });
+			val = $(this).val();
+		  }
+		});
+
+		$(function() {
+          $( "#temp_secs" ).slider({
+            range: "min",
+            value: 4,
+            min: 0,
+            max: 30,
+            stop: function( event, ui ) {
+              $( "#temp_secs" ).val( temp_secs.value );
+	          $.getJSON('/temp_secs?value=' + temp_secs.value );
+            }
+          });
+          $( "#temp_secs" ).val( $( "#slider-range-min" ).slider( "temp_secs.value" ) );		  
+        });
+
+		$(function() {
+          $( "#wind_secs" ).slider({
+            range: "min",
+            value: 4,
+            min: 0,
+            max: 30,
+            stop: function( event, ui ) {
+              $( "#wind_secs" ).val( wind_secs.value );
+	          $.getJSON('/wind_secs?value=' + wind_secs.value );
+            }
+          });
+          $( "#wind_secs" ).val( $( "#slider-range-min" ).slider( "wind_secs.value" ) );		  
+        });
+		
+		$(function() {
+          $( "#red_points" ).slider({
+            range: "min",
+            value: 128,
+            min: 0,
+            max: 255,
+			disabled: true,
+            stop: function( event, ui ) {
+              $( "#red_points" ).val( red_points.value );
+	          $.getJSON('/red?value=' + red_points.value );
+            }
+          });
+          $( "#red_points" ).val( $( "#slider-range-min" ).slider( "red_points.value" ) );		  
+        });
+
+		$(function() {
+          $( "#green_points" ).slider({
+            range: "min",
+            value: 128,
+            min: 0,
+            max: 255,
+			disabled: true,
+            stop: function( event, ui ) {
+              $( "#green_points" ).val( green_points.value );
+	          $.getJSON('/green?value=' + green_points.value );
+            }
+          });
+          $( "#green_points" ).val( $( "#slider-range-min" ).slider( "green_points.value" ) );		  
+        });
+
+		$(function() {
+          $( "#blue_points" ).slider({
+            range: "min",
+            value: 128,
+            min: 0,
+            max: 255,
+			disabled: true,
+            stop: function( event, ui ) {
+              $( "#blue_points" ).val( blue_points.value );
+	          $.getJSON('/blue?value=' + blue_points.value );
+            }
+          });
+          $( "#blue_points" ).val( $( "#slider-range-min" ).slider( "blue_points.value" ) );		  
+        });
+		
+		$(function() {
+		  $( "#color_scheme" ).change(function() {
+		      $( "#color_scheme" ).val( color_scheme.value );
+			  $.getJSON('/multicolor?value=' + color_scheme.value );
+	  		  if(color_scheme.value<4){
+			    $( "#red_points" ).slider( "option", "disabled", true );
+				$( "#green_points" ).slider( "option", "disabled", true );
+				$( "#blue_points" ).slider( "option", "disabled", true );
+			  } else {
+			    $( "#red_points" ).slider( "option", "disabled", false );
+				$( "#green_points" ).slider( "option", "disabled", false );
+				$( "#blue_points" ).slider( "option", "disabled", false );
+              }
+		    }
+		  );
+		});
+		
+		$(function() {
+		  $( "#timezone" ).change(function() {
+		      $( "#timezone" ).val( timezone.value );
+			  $.getJSON('/tzone?value=' + timezone.value );
+		    }
+		  );
+		});
+		
+      </script>
+</head>
+
+<body>
+<div data-role="page">
+  <div data-role="header">
+  <h1>WordClock Setup</h1>  
+</div>
+<div data-role="main" class="ui-content">
+<p>
+  <div id = "time" style = ""></div>
+  <input type = "button" id = "btnTime" value = "Get time" />
+  <input type = "button" id = "btnAnimate1" value = "Animate1" />
+  <input type = "button" id = "btnAnimate2" value = "Animate2" />
+  <label for="day">Time zone</label>
+  <select name="timezone" id="timezone">
+    <option value="1">Amsterdam (GMT+1)</option>
+    <option value="0">London (GMT)</option>
+    <option value="2">Istanbul (GMT+2)</option>
+    <option value="3">Moscow (GMT+3)</option>
+	<option value="4">(GMT+4)</option>
+	<option value="5">(GMT+5)</option>
+	<option value="6">(GMT+6)</option>
+	<option value="7">(GMT+7)</option>
+	<option value="8">(GMT+8)</option>
+  </select>
+  <label for="points">Temperature Display seconds</label>
+  <input type="range" name="temp_secs" id="temp_secs" value="4" min="0" max="30">
+  <label for="points">Windspeed Display seconds</label>
+  <input type="range" name="wind_secs" id="wind_secs" value="4" min="0" max="30">
+  <label for="points">Brightness:</label>
+  <input type="range" name="br_points" id="br_points" value="128" min="0" max="255">
+  <label for="day">Colorscheme</label>
+  <select name="color_scheme" id="color_scheme">
+    <option value="1">Autumn</option>
+    <option value="2">Art Deco</option>
+    <option value="3">Jugendsteel</option>
+	<option value="4">Single color, use color mixer</option>
+  </select>
+  <label for="points">Red:</label>
+  <input type="range" name="red_points" id="red_points" value="128" min="0" max="255">
+  <label for="points">Green:</label>
+  <input type="range" name="green_points" id="green_points" value="128" min="0" max="255">
+  <label for="points">Blue:</label>
+  <input type="range" name="blue_points" id="blue_points" value="128" min="0" max="255">
+</p>
+</div>
+</body>
+</html>
